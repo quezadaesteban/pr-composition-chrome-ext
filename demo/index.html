@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PR Composition · local demo</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bgColor-default: #fff;
+        --bgColor-muted: #f6f8fa;
+        --fgColor-default: #1f2328;
+        --fgColor-muted: #59636e;
+        --borderColor-default: #d1d9e0;
+        --borderColor-muted: #d8dee4;
+      }
+      body {
+        margin: 0;
+        font:
+          14px/1.5 -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        background: #fff;
+        color: #1f2328;
+      }
+      body > header {
+        padding: 18px 32px;
+        background: #f6f8fa;
+        border-bottom: 1px solid #d1d9e0;
+      }
+      main {
+        max-width: 1050px;
+        margin: 32px auto;
+        padding: 0 24px;
+      }
+      h1 {
+        font-size: 26px;
+        font-weight: 500;
+        margin: 6px 0 14px;
+      }
+      nav {
+        display: flex;
+        gap: 26px;
+        border-bottom: 1px solid #d1d9e0;
+        padding: 14px 0;
+        margin-top: 12px;
+      }
+      a {
+        color: #0969da;
+        text-decoration: none;
+      }
+      .diff-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding: 16px 0;
+      }
+      .diff-list section {
+        margin: 0;
+        border: 1px solid #d1d9e0;
+        border-radius: 8px;
+      }
+      .diff-list section > div {
+        position: sticky;
+        top: 68px;
+        z-index: 10;
+        padding: 12px 16px;
+        background: #f6f8fa;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      h3 {
+        font:
+          600 13px ui-monospace,
+          monospace;
+        margin: 0;
+      }
+      .diff-list section > p {
+        min-height: 220px;
+        padding: 12px 16px;
+        color: #59636e;
+      }
+      body > header strong {
+        margin-right: 10px;
+      }
+      #toggle-file {
+        border: 1px solid #d1d9e0;
+        background: #fff;
+        padding: 6px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+      .sample-note {
+        color: #59636e;
+      }
+      .review-toolbar {
+        position: sticky;
+        top: 0;
+        z-index: 30;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 16px 0;
+        border-bottom: 1px solid #d1d9e0;
+      }
+      .review-toolbar button {
+        border: 1px solid #d1d9e0;
+        border-radius: 6px;
+        padding: 6px 12px;
+        font: inherit;
+      }
+      .viewed-toggle {
+        border: 1px solid #d1d9e0;
+        border-radius: 6px;
+        padding: 6px 10px;
+        background: #fff;
+        cursor: pointer;
+      }
+      .viewed-toggle[aria-pressed="true"] {
+        color: #0969da;
+        background: #ddf4ff;
+      }
+      .review-toolbar .right {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .layout {
+        display: grid;
+        grid-template-columns: 300px minmax(0, 1fr);
+        gap: 16px;
+      }
+      #pr-file-tree {
+        position: sticky;
+        top: 76px;
+        align-self: start;
+        padding: 16px 0;
+      }
+      #pr-file-tree input {
+        width: 100%;
+        padding: 5px 8px;
+        border: 1px solid #d1d9e0;
+        border-radius: 6px;
+        font: inherit;
+      }
+      .review-toolbar .right button:last-child {
+        background: #1f883d;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <strong>PR Composition</strong> Local demo · synthetic PR data ·
+      <button id="toggle-file">Simulate partial data</button>
+    </header>
+    <main>
+      <p class="sample-note">example / invitations</p>
+      <h1>Add invitation links <span class="sample-note">#42</span></h1>
+      <span aria-label="Lines changed: 250 additions &amp; 6 deletions"
+        >+250 −6</span
+      >
+      <nav aria-label="Pull request navigation">
+        <span>Conversation</span><span>Commits</span><span>Checks</span
+        ><a href="https://github.com/example/invitations/pull/42/changes"
+          >Files changed (5)</a
+        >
+      </nav>
+      <section class="review-toolbar" aria-label="Review controls">
+        <div><button type="button">All commits</button></div>
+        <div class="right">
+          <span class="sample-note">0 / 5 viewed</span>
+          <button type="button">Submit comments</button>
+        </div>
+      </section>
+      <div class="layout">
+        <div id="pr-file-tree">
+          <div>
+            <input placeholder="Filter files…" aria-label="Filter files…" />
+          </div>
+        </div>
+        <div class="diff-list">
+          <section id="diff-source">
+            <div>
+              <h3><a href="#diff-source">src/invitations.ts</a></h3>
+              <span>Lines changed: 30 additions &amp; 5 deletions</span>
+              <button class="viewed-toggle" aria-pressed="true">Viewed</button>
+            </div>
+            <p>Application diff placeholder</p>
+          </section>
+          <section id="diff-tests">
+            <div>
+              <h3><a href="#diff-tests">src/invitations.spec.ts</a></h3>
+              <span>Lines changed: 200 additions &amp; 0 deletions</span>
+              <button class="viewed-toggle" aria-pressed="false">
+                Not Viewed
+              </button>
+            </div>
+            <p>Test diff placeholder</p>
+          </section>
+          <section id="diff-config">
+            <div>
+              <h3><a href="#diff-config">config/invitations.json</a></h3>
+              <span>Lines changed: 5 additions &amp; 1 deletion</span>
+              <button class="viewed-toggle" aria-pressed="false">
+                Not Viewed
+              </button>
+            </div>
+            <p>Configuration diff placeholder</p>
+          </section>
+          <section id="diff-migration">
+            <div>
+              <h3>
+                <a href="#diff-migration"
+                  >database/migrations/create_invitations.sql</a
+                >
+              </h3>
+              <span>Lines changed: 12 additions &amp; 0 deletions</span>
+              <button class="viewed-toggle" aria-pressed="true">Viewed</button>
+            </div>
+            <p>Migration diff placeholder</p>
+          </section>
+          <section id="diff-docs">
+            <div>
+              <h3><a href="#diff-docs">docs/invitations.md</a></h3>
+              <span>Lines changed: 3 additions &amp; 0 deletions</span>
+              <button class="viewed-toggle" aria-pressed="false">
+                Not Viewed
+              </button>
+            </div>
+            <p>Documentation diff placeholder</p>
+          </section>
+        </div>
+      </div>
+    </main>
+    <script src="demo.js"></script>
+    <script src="content.js"></script>
+  </body>
+</html>

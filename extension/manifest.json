@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "PR Composition",
+  "version": "0.2.1",
+  "description": "Show the lines a reviewer needs to read in a GitHub PR, separate from tests, config and lockfiles, using only the page already loaded.",
+  "permissions": ["storage", "webNavigation", "scripting"],
+  "host_permissions": ["https://github.com/*"],
+  "background": {
+    "service_worker": "background.js"
+  }
+}

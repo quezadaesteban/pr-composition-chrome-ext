@@ -1,0 +1,28 @@
+{
+  "name": "pr-composition",
+  "version": "0.2.1",
+  "private": true,
+  "type": "module",
+  "description": "Token-free GitHub PR size breakdown from data already on the page",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quezadaesteban/pr-composition-chrome-ext.git"
+  },
+  "engines": {
+    "node": ">=22.16"
+  },
+  "scripts": {
+    "format": "prettier --write .",
+    "lint": "prettier --check .",
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/*.test.js",
+    "demo": "node scripts/demo.mjs",
+    "package": "node scripts/package.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2",
+    "jsdom": "26.1.0",
+    "prettier": "3.9.8"
+  }
+}
