@@ -35,7 +35,15 @@ Ticking a box clicks that file's own GitHub **Viewed** control, so GitHub saves 
 ## What the numbers mean
 
 - **Changes:** every file that does not match a configured category. This is the remainder, not a language detector.
-- **Other (hidden):** the default rule. Tests, lockfiles, config (`*.json`, `*.yml`, `*.yaml`, `*.toml`, dotfile configs, `*.config.*`, `.github/**`), docs (`*.md`, `docs/**`) and generated files or assets (`*.svg`, images, minified files, source maps, snapshots, `.gitkeep`). It is counted but never shown. Blanket config patterns also catch things like i18n JSON or Kubernetes manifests; add a visible category before Other if you want those reviewed.
+- **Other (hidden):** the default rule, counted but never shown. It covers the common conventions of JavaScript/TypeScript, Python, Ruby, Go, Java/Kotlin/Android, .NET, PHP, Rust, Swift/iOS, Dart/Flutter, Elixir and Scala:
+  - **Tests and test support:** test directories (`test/`, `tests/`, `Tests/`, `spec/`, `__tests__/`, `e2e/`, `androidTest/`, `testdata/` …), test file names (`*.spec.*`, `*.test.*`, `*_test.go`, `*Test.java`, `*Tests.swift` inside a `*Tests` folder …), `__mocks__/`, `__fixtures__/`, snapshots and stories.
+  - **Dependencies:** lockfiles and manifests such as `package.json`, `go.mod`, `Gemfile`, `requirements*.txt`, `pom.xml`, Gradle and sbt files, `*.csproj`, `Package.swift`, `Podfile` and `mix.exs`, plus build tool wrappers.
+  - **Config:** `*.json`, `*.yml`, `*.yaml`, `*.toml`, `*.ini`, `*.cfg`, `*.properties`, `*.plist`, `*.xcconfig`, `*.config.*`, Elixir `config/*.exs`, tool dotfiles, CI (`.github/`, `.circleci/`, `.buildkite/`, `Jenkinsfile`) and editor settings, including Xcode project files.
+  - **Docs:** `*.md`, `*.rst`, `*.adoc`, `docs/`, `LICENSE`, `CHANGELOG`.
+  - **Generated files and assets:** type declarations, `__generated__/`, protobuf and codegen output, minified files, source maps, Rails `db/schema.rb`, images, fonts, media and PDFs.
+
+  Source code, database migrations, `Dockerfile`, `Makefile`, `CMakeLists.txt`, Terraform, shell scripts, `AndroidManifest.xml`, `*.entitlements`, storyboards and `*.mdx` stay in Changes unless a directory rule above catches them, for example a script under `.github/` or an MDX page under `docs/`. Generic folder names such as `fixtures/` or `mocks/` also stay, because projects use them for production code. Blanket config patterns also catch runtime settings, i18n JSON or Kubernetes manifests; add a visible category before Other if you want those reviewed.
+
 - **Custom categories:** each visible category gets its own cell in the chip; clicking it shows its files in the sidebar list.
 
 Changes + every category, hidden or visible, = all loaded files. The accounting check compares that total with GitHub's PR header.
